@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="cart.css">
+    <style>
+        /* Optional: Basic styling for demonstration */
+        .cart {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .cart h2 {
+            text-align: center;
+        }
+        .cart ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .cart li {
+            margin-bottom: 10px;
+        }
+        .cart p {
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Your Shopping Cart</h1>
+</header>
+
+<div class="cart">
+    <h2>Shopping Cart</h2>
+    <ul id="cart-items"></ul>
+    <p>Total: $<span id="cart-total">0.00</span></p>
+</div>
+<footer>
+    <p>&copy; 2023 Your E-Commerce Store. All rights reserved.</p>
+</footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const cartItemsList = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Function to display cart items
+        function showCart() {
+            cartItemsList.innerHTML = ''; // Clear previous items
+
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItemsList.appendChild(li);
+            });
+
+            // Update total price
+            const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+            cartTotal.textContent = totalPrice.toFixed(2);
+        }
+
+        // Initial display of cart items
+        showCart();
+    });
+</script>
+
+</body>
+</html>
